@@ -1,3 +1,5 @@
+{{$KUBE_STATE_METRICS_MEM_REQUEST := DefaultParam .CL2_KUBE_STATE_METRICS_MEM_REQUEST (printf "%dGi" (MultiplyInt 2 (AddInt 1 (DivideInt .Nodes 1000))))}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -33,11 +35,11 @@ spec:
           requests:
             cpu: {{AddInt 200 (MultiplyInt 500 (DivideInt .Nodes 1000))}}m
             # Start with 2Gi and add 2Gi for each 1K nodes.
-            memory: {{MultiplyInt 2 (AddInt 1 (DivideInt .Nodes 1000))}}Gi
+            memory: {{$KUBE_STATE_METRICS_MEM_REQUEST}}
           limits:
             cpu: {{AddInt 200 (MultiplyInt 500 (DivideInt .Nodes 1000))}}m
             # Start with 2Gi and add 2Gi for each 1K nodes.
-            memory: {{MultiplyInt 2 (AddInt 1 (DivideInt .Nodes 1000))}}Gi
+            memory: {{$KUBE_STATE_METRICS_MEM_REQUEST}}
         ports:
         - containerPort: 8080
           name: http-metrics
