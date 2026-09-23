@@ -132,3 +132,9 @@ spec:
     secret:
       secretName: {{.Name}}
       optional: true
+  - name: pvc-0
+    persistentVolumeClaim:
+      claimName: {{.Name}}-pvc-0
+  - name: pvc-1
+    persistentVolumeClaim:
+      claimName: {{.Name}}-pvc-1
